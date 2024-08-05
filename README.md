@@ -85,28 +85,41 @@ Add your instances to the multicast domain. Use the value of MULTICAST_GROUP_ADD
 
 Ensure you allow all UDP, TCP, and IGMP(2) traffic in your security group.
 
-After setting up AWS, modify the following files based on the comments:
+After setting up AWS:
 
-`constants.py`
+Choose one of the instances as the primary instance.
 
-`aws_vars.sh`
+Set the private IP address of the primary instance as the `SERVER_ADDRESS` in `constants.py`.
 
-`scripts/var.sh`
+In `aws_vars.sh`, set `N` to the number of total instances you have. Set the `KEY_PATH` as the path to the AWS key pair on your machine. List the private IP addresses of all the instances in `HOSTNAMES`; the primary should be the first.
+
+In `aws_local_vars.sh`, set `N` to the number of total instances you have. Set the `LOCAL_KEY_PATH` as the path to the AWS key pair on the primary instance. List the public IP addresses of all the instances in `HOSTNAMES`; the primary should be the first.
 
 Configure the experiment(s) you want to run by modifying `gen_conf.py`.
 
-Clone the repository and set up the project by running `setup.sh` on each server.
+Clone the repository and set up the project by running `setup.sh` on each server using the following. Then copy the AWS key to the primary instance.
 
-Upload your AWS key pair to the primary instance.
+```
+bash scripts/decentralized_aws.sh --setup
+bash scripts/decentralized_aws.sh --copy-key
 
-Finally, run the `nohup_run.sh` script on the primary instance to run the experiment(s).
+```
 
-After the experiments are finished, you can download the results using `scripts/download.sh`
+Finally, the experiments will be started by running nohup_run.sh on the primary instance.
 
-Use `file.py` to post-process the results and generate the metrics
+```
+bash scripts/decentralized_aws.sh --run-nohup
+```
 
+After the experiments are finished, you can download the results using `scripts/download_aws.sh`
+```
+bash scripts/download_aws.sh --results
+bash scripts/download_aws.sh --extract-results
 
-# Running on Multiple Servers: CloudLab
+```
+
+Finally use the `utils/file.py` to post-process the results to generate charts.
+
 
 
 # Error with Large Point Clouds
