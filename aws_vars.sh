@@ -7,5 +7,5 @@ REPO_PATH="Swarical"
 
 #cluster 1
 HOSTNAMES=(
-"list private ips of servers"
+"list of private ips of servers"
 )
