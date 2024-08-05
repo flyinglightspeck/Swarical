@@ -198,10 +198,6 @@ if __name__ == '__main__':
         os.makedirs(os.path.join(results_directory, 'timeline'), exist_ok=True)
     point_cloud = np.loadtxt(f'assets/{Config.SHAPE}.txt', delimiter=',')
 
-    if Config.SAMPLE_SIZE != 0:
-        # np.random.shuffle(point_cloud)
-        point_cloud = point_cloud[:Config.SAMPLE_SIZE]
-
     total_count = point_cloud.shape[0]
     h = np.log2(total_count)
     # print(h)
@@ -259,9 +255,6 @@ if __name__ == '__main__':
                                                  results_directory, stand_by_coord)
                         p.start()
                         processes.append(p)
-                    if pid == Config.SAMPLE_SIZE:
-                        stop_dispatcher = True
-                        break
                 if stop_dispatcher:
                     break
 
