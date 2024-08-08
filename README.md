@@ -102,7 +102,6 @@ Clone the repository and set up the project by running `setup.sh` on each server
 ```
 bash scripts/decentralized_aws.sh --setup
 bash scripts/decentralized_aws.sh --copy-key
-
 ```
 
 Finally, the experiments will be started by running nohup_run.sh on the primary instance.
@@ -115,7 +114,6 @@ After the experiments are finished, you can download the results using `scripts/
 ```
 bash scripts/download_aws.sh --results
 bash scripts/download_aws.sh --extract-results
-
 ```
 
 Finally use the `utils/file.py` to post-process the results to generate charts.
