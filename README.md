@@ -137,9 +137,11 @@ Reload terminal and then run this command:
 
 ``ulimit -n 9999``
 
+# Online Localization: ISR, HC, and RSF
+
 # Citations
 
-Hamed Alimohammadzadeh, Heather Culbertson, and Shahram Ghandeharizadeh. 2024. Swarical: An Integrated Hierarchical Approach to Localizing Flying Light Specks. In Proceedings of the 32nd ACM International Conference on Multimedia (MM '24). Association for Computing Machinery, New York, NY, USA. https://doi.org/10.1145/3664647.3681080
+Hamed Alimohammadzadeh, and Shahram Ghandeharizadeh. 2024. Swarical: An Integrated Hierarchical Approach to Localizing Flying Light Specks. In Proceedings of the 32nd ACM International Conference on Multimedia (MM '24). Association for Computing Machinery, New York, NY, USA. https://doi.org/10.1145/3664647.3681080
 
 BibTex:
 ```
