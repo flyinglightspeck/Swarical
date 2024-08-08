@@ -3,7 +3,7 @@ Swarical uses the hardware specification of sensors mounted on FLSs to convert m
 
 Authors:  Hamed Alimohammadzadeh(halimoha@usc.edu) and Shahram Ghandeharizadeh (shahram@usc.edu)
 
-# Features
+## Features
 
   * Three decentralized algorithms that localize FLSs to illuminate a 3D or 2D point cloud.
   * A state machine that implements a decentralized algorithm.
@@ -11,23 +11,23 @@ Authors:  Hamed Alimohammadzadeh(halimoha@usc.edu) and Shahram Ghandeharizadeh (
   * Launches multiple processes, one process per Flying Light Speck, FLS.  With large point clouds (FLSs), the software scales to utilize multiple servers. Both CloudLab and Amazon AWS are supported.
 
 
-# Limitations
+## Limitations
   * With large point clouds and the Linux operating system, the execution of the software may exhaust the max open files supported by the operating system.  See below, Error with Large Point Clouds, for how to resolve. 
 
 
-# Clone
+## Clone
 ```
 git clone https://github.com/flyinglightspeck/Swarical.git
 ```
 
 
-# Running on a Laptop or a Server
+## Running on a Laptop or a Server
 
 This software was implemented and tested using Python 3.9.0.
 
 We recommend using PyCharm, which enables the software to run across multiple operating systems, e.g., Windows, MacOS, etc.
 
-## Running using a (PyCharm) Terminal
+### Running using a (PyCharm) Terminal
 
 Run ``bash setup.sh`` to install the requirements.
 
@@ -39,7 +39,7 @@ This program is designed to scale horizontally across multiple servers and run w
 
 Run `server.py` after adjusting the settings of `config.py` (see below). 
 
-## Running using virtual environment, Venv
+### Running using virtual environment, Venv
 
 You can create and activate a virtual environment by following these steps.
 First, you'll need to create a virtual environment using Venv. You can use any name instead of env.
@@ -71,12 +71,12 @@ pip3 install -r requirements.txt
 You can now run `server.py`. Finally, the virtual environment can be deactivated by running `deactivate` in the terminal.
 
 
-## A Point Cloud
+### A Point Cloud
 We provide several point clouds, e.g., a Chess piece.  The value of variable SHAPE in config.py controls the used point cloud.  Set the `SHAPE` value to the shape name (use the file name of .txt files in the `assets` directory as the value of the `SHAPE`, e.g., `dragon_1147_50_spanning_2_sb`).  The repository comes with the following shapes: `chess`, `dragon`, `kangaroo`, `racecar`, `skateboard`, `grid_36`.
 
 The file name parts separated by '_' specifies the shape name, number of points, group size, and the planner variant.
 
-# Running on Multiple Servers: Amazon AWS
+## Running on Multiple Servers: Amazon AWS
 First, set up a cluster of servers. Ideally, the total number of cores of the servers should equal or be greater than the number of points in the point cloud (number of FLSs).
 
 Set up a multicast domain (For more information on how to create a multicast domain, see aws docs: https://docs.aws.amazon.com/vpc/latest/tgw/manage-domain.html)
@@ -120,7 +120,7 @@ Finally use the `utils/file.py` to post-process the results to generate charts.
 
 
 
-# Error with Large Point Clouds
+## Error with Large Point Clouds
 If you encountered an error regarding not enough fds, increase max open files system-wide to be able to run a large point cloud:
 
 ``sudo vim /etc/sysctl.conf``
@@ -135,13 +135,13 @@ Reload terminal and then run this command:
 
 ``ulimit -n 9999``
 
-# Online Localization: ISR, HC, and RSF
+## Online Localization: ISR, HC, and RSF
 We present three localization techniques. The main difference between the techniques is the amount of concurrent movements by the FLSs. ISR is superior to HC and RSF. It is faster and more accurate than the other, minimizing the total distance traveled by FLSs. The use of RSF is not recommended as it fails to localize large point clouds effectively. Compare the performance of the techniques by watching the demonstrations below:
 * [Inter-Swarm Rounds, ISR](https://youtu.be/GncnoqqYT_w)
 * [Highly Concurrent, HC](https://youtu.be/0_Gs7IkDADw)
 * [Rounds across the Swarm-tree and FLS-trees, RSF](https://youtu.be/YlLCxW32tvg)
 
-# Citations
+## Citations
 
 Hamed Alimohammadzadeh, and Shahram Ghandeharizadeh. 2024. Swarical: An Integrated Hierarchical Approach to Localizing Flying Light Specks. In Proceedings of the 32nd ACM International Conference on Multimedia (MM '24). Association for Computing Machinery, New York, NY, USA. https://doi.org/10.1145/3664647.3681080
 
