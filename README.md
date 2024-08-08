@@ -41,8 +41,8 @@ Run `server.py` after adjusting the settings of `config.py` (see below).
 
 ## Running using virtual environment, Venv
 
-You can use the `bash setup_venv.sh` script to create and activate a virtual environment or alternatively follow these steps to set it up manually.
-First create a virtual environment using venv. You can use any name instead of env.
+You can create and activate a virtual environment by following these steps.
+First, you'll need to create a virtual environment using Venv. You can use any name instead of env.
 
 ```
 cd Swarical
@@ -55,7 +55,7 @@ Then, activate the virtual environment.
 source env/bin/activate
 ```
 
-On windows use the following instead:
+On Windows use the following instead:
 
 ```
 env/Scripts/activate.bat //In CMD
@@ -138,6 +138,10 @@ Reload terminal and then run this command:
 ``ulimit -n 9999``
 
 # Online Localization: ISR, HC, and RSF
+We present three localization techniques. The main difference between the techniques is the amount of concurrent movements by the FLSs. ISR is superior to HC and RSF. It is faster and more accurate than the other, minimizing the total distance traveled by FLSs. The use of RSF is not recommended as it fails to localize large point clouds effectively. Compare the performance of the techniques by watching the demonstrations below:
+* [Inter-Swarm Rounds, ISR](https://youtu.be/GncnoqqYT_w)
+* [Highly Concurrent, HC](https://youtu.be/0_Gs7IkDADw)
+* [Rounds across the Swarm-tree and FLS-trees, RSF](https://youtu.be/YlLCxW32tvg)
 
 # Citations
 
