@@ -136,7 +136,7 @@ Reload terminal and then run this command:
 ``ulimit -n 9999``
 
 ## Online Localization: ISR, HC, and RSF
-We present three localization techniques. The main difference between the techniques is the amount of concurrent movements by the FLSs. ISR is superior to HC and RSF. It is faster and more accurate than the other, minimizing the total distance traveled by FLSs. The use of RSF is not recommended as it fails to localize large point clouds effectively. Compare the performance of the techniques by watching the demonstrations below:
+ISR, HC, and RSF are three online localization techniques of Swarical. The main difference between the techniques is the amount of concurrent movements by the FLSs. ISR is superior to HC and RSF. It is faster and more accurate than the other, minimizing the total distance traveled by FLSs. The use of RSF is not recommended as it fails to localize large point clouds effectively. The following video demonstrations show each technique localizing the Skateboard.  Note that RSF is not able to fully localize the Skateboard.
 * [Inter-Swarm Rounds, ISR](https://youtu.be/GncnoqqYT_w)
 * [Highly Concurrent, HC](https://youtu.be/0_Gs7IkDADw)
 * [Rounds across the Swarm-tree and FLS-trees, RSF](https://youtu.be/YlLCxW32tvg)
