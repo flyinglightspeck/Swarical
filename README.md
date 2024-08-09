@@ -147,7 +147,7 @@ Hamed Alimohammadzadeh, and Shahram Ghandeharizadeh. 2024. Swarical: An Integrat
 
 BibTex:
 ```
-@inproceedings{10.1145/3664647.3681080, 
+@inproceedings{swarical2024, 
 author = {Alimohammadzadeh, Hamed and Ghandeharizadeh, Shahram}, 
 title = {Swarical: An Integrated Hierarchical Approach to Localizing Flying Light Specks}, 
 year = {2024}, 
