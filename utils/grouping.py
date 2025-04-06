@@ -19,6 +19,15 @@ import networkx.algorithms.approximation as nx_app
 import networkx as nx
 
 
+def is_flat(points, tol=1e-6):
+    """Check if points lie in a plane."""
+    if len(points) < 4:
+        return True  # 3 or fewer points always lie in a plane
+    p0 = points[0]
+    vecs = points[1:] - p0
+    u, s, vh = np.linalg.svd(vecs)
+    return s[-1] < tol
+
 def construct_graph(points):
     G = nx.Graph()
     G.add_nodes_from(range(len(points)))
@@ -52,7 +61,7 @@ def matching_bi(points):
 
 def k_means(points, k=4):
     # 10
-    kmeans = KMeans(n_clusters=k, random_state=11)
+    kmeans = KMeans(n_clusters=k, random_state=10)
     kmeans.fit(points)
 
     labels = kmeans.labels_
@@ -509,8 +518,6 @@ def create_spanning_tree_groups_2(A, G, shape, visualize):
             # "radio_range": radio_range.to_list(),
             # "radio_range_v3": radio_range_v3
             }
-
-
 
 
 def create_spanning_tree_groups_2_with_standbys(A, G, shape, visualize, th=2.4):
@@ -1016,11 +1023,14 @@ def create_mst_groups(A, shape):
 if __name__ == "__main__":
     # n = 4
     visualize = False
-    # shapes = ["chess_100", "chess_408", "skateboard_1372", "dragon_1147", "palm_725", "racecar_3720", "kangaroo_972"][
-    #          2:3]
-    # scales = [.2, .4, 1, 1, 1, 1, 1][2:3]
-    shapes = ["08point"]
-    scales = [0.01]
+    shapes = ["chess_100", "chess_408", "skateboard_1372", "dragon_1147", "palm_725", "racecar_3720",
+              "kangaroo_972"
+              ][3:4]
+    scales = [.2, .4, 1, 1, 1, 1,
+              1
+              ][3:4]
+    # shapes = ["08point"]
+    # scales = [0.01]
     # for n in [6]:
     # for n in [6]:
     # for shape in ["chess"]:
@@ -1033,15 +1043,17 @@ if __name__ == "__main__":
             # shape = f"grid_{n*n}"
             # shape = f"line_{n}"
 
-            if visualize:
-                mpl.use('macosx')
+            # if visualize:
+            #     mpl.use('macosx')
 
             # A = np.random.rand(n, 3)
             # for i in range(1):
             #     for j in range(n):
             #         A[i * n + j] = [i, j, 1]
 
-            A = np.loadtxt(f'../assets/{shape}.xyz', delimiter=' ') * 100 * scale
+            A = np.loadtxt(f'../assets/dataset/original_scale/{shape}.txt', delimiter=' ') * 4
+            # A[:, [1, 2, 0]] = A[:, [0, 1, 2]]
+            np.savetxt(f"../assets/dataset/point_cloud/{shape}.xyz", A, delimiter=' ')
             # A = np.loadtxt(f'../assets/{shape}.txt', delimiter=',')*0.4
             # A[:, [1, 2, 0]] = A[:, [0, 1, 2]]
 
@@ -1050,7 +1062,7 @@ if __name__ == "__main__":
             # create_binary_overlapping_groups(A, shape, visualize)
             # create_spanning_tree_groups(A, 5, shape, visualize)
 
-            hists = create_spanning_tree_groups_2(A, g, shape, visualize)
+            # hists = create_spanning_tree_groups_2(A, g, shape, visualize)
             # with open(f"../assets/spanning_stats_{shape}_{g}.json", "w") as f:
             #     json.dump(hists, f)
 
@@ -1063,7 +1075,7 @@ if __name__ == "__main__":
             #
             # print(f"{shape}\tG={g}\t{min_rr}\t{mean_rr}\t{max_rr}")
 
-            create_histograms(shape, g, **hists)
+            # create_histograms(shape, g, **hists)
 
             # create_spanning_tree_groups_2_dfs(A, 5, shape, visualize)
             # create_clustered_spanning_groups(A, 5, shape)

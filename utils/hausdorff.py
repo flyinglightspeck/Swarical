@@ -4,7 +4,7 @@ import matplotlib as mpl
 
 from scipy.spatial.distance import cdist
 
-mpl.use('macosx')
+# mpl.use('macosx')
 
 def hausdorff_distance_optimized(a, b, debug=False):
     """Optimized Hausdorff distance calculation using SciPy."""

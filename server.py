@@ -5,7 +5,6 @@ import struct
 
 import numpy as np
 from multiprocessing import shared_memory
-import scipy.io
 import time
 import os
 import threading

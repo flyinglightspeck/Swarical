@@ -6,7 +6,7 @@ import numpy as np
 
 
 def plot_point_cloud(ptcld):
-    mpl.use('macosx')
+    # mpl.use('macosx')
     fig = plt.figure()
     ax = fig.add_subplot(projection='3d')
     graph = ax.scatter(ptcld[:, 0], ptcld[:, 1], ptcld[:, 2])
@@ -81,7 +81,7 @@ def plot_points(shape, A, azim, elev, x=None, y=None, z=None, alpha=0):
 
 
 if __name__ == '__main__':
-    mpl.use('macosx')
+    # mpl.use('macosx')
     root_color = '#0871f5'
 
     shapes = ["chess_408", "skateboard_1372", "dragon_1147", "palm_725", "racecar_3720", "kangaroo_972"][3:4]

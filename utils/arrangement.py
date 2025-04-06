@@ -97,8 +97,8 @@ if __name__ == "__main__":
     # for shape in ["chess_100"]:
     #     shape = f"grid_{n*n}"
 
-        if visualize:
-            mpl.use('macosx')
+        # if visualize:
+        #     mpl.use('macosx')
 
         A = np.loadtxt(f'../assets/{shape}_50_spanning_2_sb.txt', delimiter=',')
         with open(f'../assets/{shape}_50_spanning_2_sb_localizer.json') as f:
