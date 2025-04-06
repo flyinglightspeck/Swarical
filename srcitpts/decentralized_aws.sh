@@ -73,5 +73,5 @@ done
 # Run nohup script on the primary node
 if [ "$run_nohup" = true ]; then
     server_addr=${USERNAME}@${HOSTNAMES[0]}
-    ssh -oStrictHostKeyChecking=no ${server_addr} "cd Swarical && bash nohup_run.sh"
+    ssh -oStrictHostKeyChecking=no ${server_addr} "cd Swarical && bash nohup_aws_run.sh"
 fi
