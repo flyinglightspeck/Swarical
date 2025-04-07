@@ -1,11 +1,8 @@
-import itertools
 import json
 import math
 from collections import Counter
-from copy import deepcopy
 
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
 from scipy.spatial import KDTree
@@ -14,7 +11,6 @@ from scipy.optimize import linear_sum_assignment
 from sklearn.cluster import KMeans
 from scipy.sparse.csgraph import min_weight_full_bipartite_matching
 from scipy.sparse import csr_matrix
-from matching.games import StableRoommates
 import networkx.algorithms.approximation as nx_app
 import networkx as nx
 
@@ -110,19 +106,6 @@ def greedy_matching(point_cloud):
                     dist_matrix[i][nearest_neighbor_idx] = np.inf
 
     return pairs
-
-
-def sr_matching(points):
-    d = squareform(pdist(points))
-    closest = np.argsort(d, axis=1)
-    preferences = {
-        p[0]: p[1:] for p in closest
-    }
-
-    game = StableRoommates.create_from_dictionary(preferences)
-    solution = game.solve()
-
-    return [(m.name, n.name) for m, n in solution.items()]
 
 
 def get_kmeans_groups(A, k):
