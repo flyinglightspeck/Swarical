@@ -1,28 +1,25 @@
 import json
-import logging
 import math
 import os
 from copy import deepcopy
 from datetime import datetime
+from collections import Counter
 
+import pymeshlab
 import networkx as nx
 import numpy as np
-import platform
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib.lines import Line2D
 from scipy.spatial.distance import cdist
-import pymeshlab
-import logging
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+from scipy.spatial import ConvexHull
+from mpl_toolkits.mplot3d import Axes3D
 
 from utils.grouping import get_kmeans_groups, construct_graph, is_flat
 from utils.tree import find_equidistant_point
 from utils.plot import add_dead_reckoning_error
 from utils import create_logger
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-from scipy.spatial import ConvexHull
-from mpl_toolkits.mplot3d import Axes3D
-from collections import Counter
 
 color_map = {
     '+X': 'r',
@@ -80,7 +77,7 @@ class Planner:
         self.init_logger()
 
     def init_logger(self):
-        self.logger = create_logger("Planner", level=logging.INFO)
+        self.logger = create_logger("Planner")
 
     def set_fls_specs(self, fls_radius, fls_min_camera_range, fls_max_camera_range):
         self.fls_radius = fls_radius
@@ -126,7 +123,8 @@ class Planner:
         self.shape_name = f"grid{grid_size}x{grid_size}_{n}"
         for i in range(grid_size):
             for j in range(grid_size):
-                self.point_cloud[i * grid_size + j] = [i * self.fls_min_camera_range*100, j * self.fls_min_camera_range*100, 1]
+                self.point_cloud[i * grid_size + j] = [i * self.fls_min_camera_range * 100,
+                                                       j * self.fls_min_camera_range * 100, 1]
 
     def compute_trees(self, swarm_size):
         A = self.point_cloud
@@ -477,8 +475,8 @@ class Planner:
         A_e = np.vstack(A_e)
         self.visualize_point_cloud(point_cloud=A_e, color='red')
 
-    def visualize_trees(self, shape_name=None, swarm_size=None):
-        path = self.load_trees(shape_name, swarm_size, px="_sb")
+    def visualize_trees(self, shape_name=None, swarm_size=None, px="_sb"):
+        path = self.load_trees(shape_name, swarm_size, px=px)
         localizer = self.localizer
         intra_localizer = self.intra_localizer
         points = np.loadtxt(f'{path}.txt', delimiter=',')
@@ -755,7 +753,8 @@ class Planner:
         plt.xticks(range(len(hist)), hist.keys())
         # plt.show()
         self.logger.info(f"Total number of FLSs: {A.shape[0]}")
-        self.logger.info(f"Number (percentage) of each variant:\n{', '.join([f'{k}:{v} ({percent[k]:.2f}%)' for k, v in hist.items()])}")
+        self.logger.info(
+            f"Number (percentage) of each variant:\n{', '.join([f'{k}:{v} ({percent[k]:.2f}%)' for k, v in hist.items()])}")
 
 
 if __name__ == '__main__':

@@ -2,29 +2,31 @@ import json
 import socket
 import pickle
 import struct
-
-import numpy as np
-from multiprocessing import shared_memory
 import time
 import os
 import threading
+import psutil
+import sys
+from multiprocessing import shared_memory
+from datetime import datetime
+
+import numpy as np
+import pandas as pd
+
+import worker
 from config import Config
 from constants import Constants
 from message import Message, MessageTypes
-import worker
-import utils
-import sys
+from utils import create_logger, hausdorff_distance, write_configs, create_csv_from_json, combine_csvs, gen_sw_charts
 from stop import stop_all
-import psutil
-from datetime import datetime
-import pandas as pd
 
 hd_timer = None
 hd_round = []
 hd_time = []
 should_stop = False
 
-logger = utils.create_logger("Primary")
+logger = create_logger("Primary")
+
 
 def join_config_properties(conf, props):
     return "_".join(
@@ -86,7 +88,7 @@ def set_stop():
 
 
 def compute_hd(sh_arrays, gtl):
-    hd_t = utils.hausdorff_distance(np.stack(sh_arrays), gtl)
+    hd_t = hausdorff_distance(np.stack(sh_arrays), gtl)
     logger.info(f"__hd__ {hd_t}")
     return hd_t
 
@@ -211,7 +213,7 @@ if __name__ == '__main__':
     for i in range(total_count):
         if i % N == nid:
             node_point_idx.append(i)
-        gtl_point_cloud[i] = np.array([point_cloud[i][0]*s, point_cloud[i][1]*s, point_cloud[i][2]*s])
+        gtl_point_cloud[i] = np.array([point_cloud[i][0] * s, point_cloud[i][1] * s, point_cloud[i][2] * s])
 
     count = len(node_point_idx)
 
@@ -499,15 +501,8 @@ if __name__ == '__main__':
             print("timeout")
             p.terminate()
 
-    # if Config.PROBABILISTIC_ROUND or Config.CENTRALIZED_ROUND:
-    # utils.write_hds_time(hd_time, results_directory, nid)
-    # else:
-    #     utils.write_hds_round(hd_round, round_time, results_directory, nid)
-    # if Config.DURATION < 660:
-    #     utils.write_swarms(swarms_metrics, round_time, results_directory, nid)
-
     if nid == 0:
-        utils.write_configs(results_directory)
+        write_configs(results_directory)
         logger.info("Primary node finished executing")
 
     for s in shared_memories:
@@ -526,6 +521,6 @@ if __name__ == '__main__':
         # print("wait a fixed time for other nodes")
         # time.sleep(90)
 
-        utils.create_csv_from_json(results_directory)
-        utils.combine_csvs(results_directory, results_directory)
-        utils.gen_sw_charts(results_directory, "*", file_name, False)
+        create_csv_from_json(results_directory)
+        combine_csvs(results_directory, results_directory)
+        gen_sw_charts(results_directory, "*", file_name, False)

@@ -3,6 +3,7 @@ import json
 import math
 import os
 from functools import partial
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FuncAnimation, FFMpegWriter

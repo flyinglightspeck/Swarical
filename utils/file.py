@@ -3,16 +3,12 @@ import math
 import os
 import json
 import csv
-import subprocess
-
-import matplotlib as mpl
 
 import numpy as np
 from matplotlib import pyplot as plt, ticker
 from scipy.spatial.distance import cdist
 
 from config import Config
-import pandas as pd
 import glob
 
 from utils import hausdorff_distance

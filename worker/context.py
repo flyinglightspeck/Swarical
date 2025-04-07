@@ -1,9 +1,9 @@
 import time
 from functools import cache
+from multiprocessing import shared_memory
 
 import networkx as nx
 import numpy as np
-from multiprocessing import shared_memory
 
 import velocity
 from config import Config
