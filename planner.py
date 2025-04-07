@@ -450,6 +450,8 @@ class Planner:
                   "w") as f:
             json.dump(self.intra_localizer, f)
 
+        self.logger.info(f"Data structures saved as {self.shape_name}_{self.swarm_size}_spanning_2 in the assets directory")
+
     def visualize_point_cloud(self, point_cloud=None, color="#0871f5"):
         if point_cloud is None:
             point_cloud = self.point_cloud
