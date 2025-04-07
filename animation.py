@@ -12,7 +12,7 @@ from utils.file import read_timelines
 from utils import create_logger
 from worker.metrics import TimelineEvents
 
-
+padding = 2.5
 start_time = 0
 plt.style.use('dark_background')
 
@@ -36,9 +36,9 @@ side_color = '#b083f0'
 
 
 def set_axis(ax, length, width, height, title=""):
-    ax.axes.set_xlim3d(left=0, right=length + ticks_gap/2)
-    ax.axes.set_ylim3d(bottom=0, top=width + ticks_gap/2)
-    ax.axes.set_zlim3d(bottom=0, top=height + ticks_gap/2)
+    ax.axes.set_xlim3d(left=0, right=length + padding)
+    ax.axes.set_ylim3d(bottom=0, top=width + padding)
+    ax.axes.set_zlim3d(bottom=0, top=height + padding)
     ax.set_aspect('equal')
     ax.grid(False)
     ax.set_xticks(range(0, length + 1, ticks_gap))
@@ -49,8 +49,8 @@ def set_axis(ax, length, width, height, title=""):
 
 
 def set_axis_2d(ax, length, width, title):
-    ax.axes.set_xlim(0 - ticks_gap/2, length + ticks_gap/2)
-    ax.axes.set_ylim(0 - ticks_gap/2, width + ticks_gap/2)
+    ax.axes.set_xlim(0 - padding, length + padding)
+    ax.axes.set_ylim(0 - padding, width + padding)
     ax.set_aspect('equal')
     ax.grid(False)
     ax.axis('off')
