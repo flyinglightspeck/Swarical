@@ -159,7 +159,7 @@ class WorkerContext:
                 self.neighbors[ctx.fid] = ctx
             if Config.SWEET_RANGE[0] <= np.linalg.norm(self.el - ctx.el) <= Config.SWEET_RANGE[1]:
                 self.sweet_neighbors[ctx.fid] = ctx
-            self.update_relative_pose(ctx)
+            # self.update_relative_pose(ctx)
 
     @cache
     def is_fls_obstructed(self, self_el, neighbors, el):

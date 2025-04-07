@@ -18,6 +18,7 @@ import logging
 from utils.grouping import get_kmeans_groups, construct_graph, is_flat
 from utils.tree import find_equidistant_point
 from utils.plot import add_dead_reckoning_error
+from utils import create_logger
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from scipy.spatial import ConvexHull
 from mpl_toolkits.mplot3d import Axes3D
@@ -78,20 +79,8 @@ class Planner:
         self.logger = None
         self.init_logger()
 
-    def init_logger(self, level=logging.INFO):
-        self.logger = logging.getLogger("Planner")
-        self.logger.setLevel(level)
-
-        self.logger.propagate = False  # Prevents passing logs to the root logger
-
-        ch = logging.StreamHandler()
-        ch.setLevel(level)
-
-        formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
-        ch.setFormatter(formatter)
-
-        if not self.logger.hasHandlers():
-            self.logger.addHandler(ch)
+    def init_logger(self):
+        self.logger = create_logger("Planner", level=logging.INFO)
 
     def set_fls_specs(self, fls_radius, fls_min_camera_range, fls_max_camera_range):
         self.fls_radius = fls_radius
@@ -137,7 +126,7 @@ class Planner:
         self.shape_name = f"grid{grid_size}x{grid_size}_{n}"
         for i in range(grid_size):
             for j in range(grid_size):
-                self.point_cloud[i * grid_size + j] = [i, j, 1]
+                self.point_cloud[i * grid_size + j] = [i * self.fls_min_camera_range*100, j * self.fls_min_camera_range*100, 1]
 
     def compute_trees(self, swarm_size):
         A = self.point_cloud

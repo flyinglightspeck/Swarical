@@ -1,26 +1,21 @@
-import itertools
+import argparse
 import json
 import math
 import os
 from functools import partial
-
 import matplotlib.pyplot as plt
 import numpy as np
-import scipy
 from matplotlib.animation import FuncAnimation, FFMpegWriter
-import matplotlib as mpl
 
 from utils.file import read_timelines
+from utils import create_logger
 from worker.metrics import TimelineEvents
 
-ticks_gap = 5
-S = 4
 
 start_time = 0
 plt.style.use('dark_background')
 
 # t30_d1_g0	t30_d1_g20	t30_d5_g0	t30_d5_g20	t600_d1_g0	t600_d1_g20	t600_d5_g0	t600_d5_g20
-output_name = "testd"
 
 # COLORS = ['#b083f0', '#fc8dc7', '#f47068', '#e0823e', '#c69027', '#57ab5a']
 
@@ -40,9 +35,9 @@ side_color = '#b083f0'
 
 
 def set_axis(ax, length, width, height, title=""):
-    ax.axes.set_xlim3d(left=0, right=length)
-    ax.axes.set_ylim3d(bottom=0, top=width)
-    ax.axes.set_zlim3d(bottom=0, top=height)
+    ax.axes.set_xlim3d(left=0, right=length + ticks_gap/2)
+    ax.axes.set_ylim3d(bottom=0, top=width + ticks_gap/2)
+    ax.axes.set_zlim3d(bottom=0, top=height + ticks_gap/2)
     ax.set_aspect('equal')
     ax.grid(False)
     ax.set_xticks(range(0, length + 1, ticks_gap))
@@ -53,8 +48,8 @@ def set_axis(ax, length, width, height, title=""):
 
 
 def set_axis_2d(ax, length, width, title):
-    ax.axes.set_xlim(0, length)
-    ax.axes.set_ylim(0, width)
+    ax.axes.set_xlim(0 - ticks_gap/2, length + ticks_gap/2)
+    ax.axes.set_ylim(0 - ticks_gap/2, width + ticks_gap/2)
     ax.set_aspect('equal')
     ax.grid(False)
     ax.axis('off')
@@ -177,13 +172,13 @@ def update(frame):
     set_axis(ax1, length, width, height, "Ground Truth")
 
     ax2.clear()
-    if name[0].startswith('skateboard'):
-        ln2 = ax2.scatter(ys, xs, c=side_color, s=S, alpha=1)
-        set_axis_2d(ax2, width, length, "Top")
+    # if name[0].startswith('skateboard'):
+    #     ln2 = ax2.scatter(ys, xs, c=side_color, s=S, alpha=1)
+    #     set_axis_2d(ax2, width, length, "Top")
 
-    else:
-        ln2 = ax2.scatter(xs, ys, c=side_color, s=S, alpha=1)
-        set_axis_2d(ax2, length, width, "Top")
+    # else:
+    ln2 = ax2.scatter(xs, ys, c=side_color, s=S, alpha=1)
+    set_axis_2d(ax2, length, width, "Top")
 
     ax3.clear()
     ln3 = ax3.scatter(xs, zs, c=side_color, s=S, alpha=1)
@@ -244,53 +239,45 @@ def find_nearest(array, value):
 
 
 if __name__ == '__main__':
-    duration = 20
-    fps = 10
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument('-i', '--input', type=str, help='input directory with charts.json', required=True)
+    argparser.add_argument('-d', '--duration', type=int, help='animation duration in seconds', default=20)
+    argparser.add_argument('-f', '--fps', type=int, help='frames per second', default=30)
+    argparser.add_argument('--ticks-gap', type=int, help='ticks gap for the plot axes', default=5)
+    argparser.add_argument('-s', '--fls-size', type=int, help='FLS size', default=5)
+    args = argparser.parse_args()
+
+    logger = create_logger("Animation")
+
+    ticks_gap = args.ticks_gap
+    S = args.fls_size
+    path = args.input
+    duration = args.duration
+    fps = args.fps
     frame_rate = 1 / fps
 
-    for r, p in [
-        (
-            "root",
-            "path"
-        )
-    ]:
-        names = p.split("_")
-        name = names[0]
-        # name = 'skateboard'
-        n_points = names[1]
-        # n_points = 1372
-        path = os.path.join(r, p)
-        scale = 0.02
-        if name == 'chess':
-            scale = 0.4
-        print(p)
+    file_name = os.path.splitext(os.path.basename(path))[0]
 
-        filtered_events, length, width, height, _ = read_point_cloud(path)
+    filtered_events, length, width, height, gtl = read_point_cloud(path)
 
-        # gtl = np.loadtxt(f'assets/{name}.xyz', delimiter=' ') * 100 * scale
-        # gtl = np.loadtxt(f'assets/{name}_{n_points}.xyz', delimiter=' ')*100*scale
-        # gtl[:, [1, 2, 0]] = gtl[:, [0, 1, 2]]
-        # gtl = np.loadtxt(f'assets/{name}_{n_points}.txt', delimiter=',')
-        gtl = np.array([[0, 0, 0]])
+    with open(f"{path}/charts.json") as f:
+        chart_data = json.load(f)
+        time_stamps = chart_data['t']
+        hds = chart_data['hd']
+        while True:
+            if hds[0] == -1:
+                hds.pop(0)
+                time_stamps.pop(0)
+            else:
+                break
+    fig, ax, ax1, ax2, ax3, ax4, tx = draw_figure()
+    points = dict()
+    swarms = dict()
+    ani = FuncAnimation(
+        fig, partial(update, ),
+        frames=fps * duration,
+        init_func=partial(init, ax, ax1, ax2, ax3, ax4))
 
-        with open(f"{path}/charts.json") as f:
-            chart_data = json.load(f)
-            time_stamps = chart_data['t']
-            hds = chart_data['hd']
-            while True:
-                if hds[0] == -1:
-                    hds.pop(0)
-                    time_stamps.pop(0)
-                else:
-                    break
-        fig, ax, ax1, ax2, ax3, ax4, tx = draw_figure()
-        points = dict()
-        swarms = dict()
-        ani = FuncAnimation(
-            fig, partial(update, ),
-            frames=fps * duration,
-            init_func=partial(init, ax, ax1, ax2, ax3, ax4))
-        #
-        # plt.show()
-        writer = FFMpegWriter(fps=fps)
-        ani.save(f"{path}/{p}.mp4", writer=writer)
+    writer = FFMpegWriter(fps=fps)
+    ani.save(f"{path}/{file_name}.mp4", writer=writer)
+    logger.info(f"Animation saved to {path}/{file_name}")

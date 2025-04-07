@@ -24,6 +24,7 @@ hd_round = []
 hd_time = []
 should_stop = False
 
+logger = utils.create_logger("Primary")
 
 def join_config_properties(conf, props):
     return "_".join(
@@ -81,12 +82,12 @@ def wait_for_client(sock):
 def set_stop():
     global should_stop
     should_stop = True
-    print('will stop next round')
+    logger.info('Stopping FLS processes')
 
 
 def compute_hd(sh_arrays, gtl):
     hd_t = utils.hausdorff_distance(np.stack(sh_arrays), gtl)
-    print(f"__hd__ {hd_t}")
+    logger.info(f"__hd__ {hd_t}")
     return hd_t
 
 
@@ -160,7 +161,7 @@ if __name__ == '__main__':
         clients = []
         for i in range(N - 1):
             client, address = ServerSocket.accept()
-            print(address)
+            logger.info(address)
             clients.append(client)
 
     if IS_CLUSTER_CLIENT:
@@ -187,7 +188,7 @@ if __name__ == '__main__':
     main_dir = Config.RESULTS_PATH if dir_name is None else os.path.join(Config.RESULTS_PATH, Config.SHAPE, dir_name)
     results_directory = os.path.join(main_dir, file_name)
     shape_directory = main_dir
-    print(main_dir)
+    logger.info(f"Results will be saved in {results_directory}")
     # exit()
 
     # results_directory = os.path.join(Config.RESULTS_PATH, Config.SHAPE, experiment_name)
@@ -199,7 +200,7 @@ if __name__ == '__main__':
 
     total_count = point_cloud.shape[0]
     h = np.log2(total_count)
-    # print(h)
+    # logger.info(h)
 
     gtl_point_cloud = np.random.uniform(0, 5, size=(total_count, 3))
     # x y z swarm_id is_failed
@@ -267,7 +268,7 @@ if __name__ == '__main__':
                     or Config.GROUP_TYPE == 'spanning_3':
                 with open(f"assets/{Config.SHAPE}_localizer.json") as f:
                     localizer = json.load(f)
-                # print(localizer)
+                # logger.info(localizer)
 
                 if Config.GROUP_TYPE == 'spanning_2' \
                         or Config.GROUP_TYPE == 'spanning_2_v2' \
@@ -335,7 +336,7 @@ if __name__ == '__main__':
             elif Config.GROUP_TYPE == 'bin_overlapping':
                 with open(f"assets/{Config.SHAPE}_bin_overlapping.json") as f:
                     bin_groups = json.load(f)
-                # print(localizer)
+                # logger.info(localizer)
                 for i in node_point_idx:
                     local_gtl_point_cloud.append(gtl_point_cloud[i])
                     p = worker.WorkerProcess(
@@ -401,13 +402,13 @@ if __name__ == '__main__':
             s.unlink()
         exit()
 
-    print(count)
+    logger.info(f"Started {count} FLS processes on this none")
     gtl_point_cloud = local_gtl_point_cloud
 
     if nid == 0:
         threading.Timer(Config.DURATION, set_stop).start()
 
-    print('waiting for processes ...')
+    logger.info('Localizing...')
 
     ser_sock = worker.WorkerSocket()
     old_swarmer = False
@@ -486,7 +487,7 @@ if __name__ == '__main__':
             t.join()
 
         ServerSocket.close()
-        print("secondary nodes are done")
+        logger.info("Secondary nodes finished executing")
 
     for p in processes:
         p.join(20)
@@ -507,7 +508,7 @@ if __name__ == '__main__':
 
     if nid == 0:
         utils.write_configs(results_directory)
-        print("primary node is done")
+        logger.info("Primary node finished executing")
 
     for s in shared_memories:
         s.close()

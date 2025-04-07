@@ -11,12 +11,12 @@ class Config:
     DISPLAY_CELL_SIZE = 0.05
     BUSY_WAITING = False
     DURATION = 30
-    SHAPE = 'grid_36_spanning_2'
+    SHAPE = 'grid4x4_16_4_spanning_2'
     RESULTS_PATH = 'results'
     MULTICAST = True
     CAMERA = 'w'
-    SCALE = 2.5
-    SS_ERROR_MODEL = 0
+    SCALE = 1
+    SS_ERROR_MODEL = 1
     SS_ERROR_PERCENTAGE = 0.0
     SS_ACCURACY_PROBABILITY = 0.0
     SS_NUM_SAMPLES = 1
@@ -25,5 +25,5 @@ class Config:
     GROUP = False
     SWEET_RANGE = (6, 8)
     GROUP_TYPE = 'spanning_2_v2'  # HC: spanning_2, ISR: spanning_2_v2, RSF: spanning_2_v3
-    FILE_NAME_KEYS = [('SHAPE', 'LS'), ('DEAD_RECKONING_ANGLE', 'D'), ('SS_ERROR_PERCENTAGE', 'X'), ('DROP_PROB_SENDER', 'LS')]
+    FILE_NAME_KEYS = [('SHAPE', 'S'), ('DEAD_RECKONING_ANGLE', 'D')]
     DIR_KEYS = [('GROUP_TYPE', 'T')]
