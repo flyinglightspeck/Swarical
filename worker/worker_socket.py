@@ -10,7 +10,7 @@ from config import Config
 class WorkerSocket:
     def __init__(self):
         self.sock = None
-        if Config.MULTICAST:
+        if Constants.PLATFORM == 'aws':
             self.create_multicast_socket()
         else:
             self.create_udp_socket()
@@ -53,7 +53,7 @@ class WorkerSocket:
                 return 0
 
         data = pickle.dumps(msg)
-        address = Constants.MULTICAST_GROUP_ADDRESS if Config.MULTICAST else Constants.BROADCAST_ADDRESS
+        address = Constants.MULTICAST_GROUP_ADDRESS if Constants.PLATFORM == 'aws' else Constants.BROADCAST_ADDRESS
         try:
             self.sock.sendto(data, address)
         except OSError:

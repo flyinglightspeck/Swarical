@@ -1,4 +1,4 @@
-## Running on Multiple Servers: Amazon AWS
+# Running on Multiple Servers: Amazon AWS
 
 First, set up a cluster of servers. Ideally, the total number of cores of the servers should be equal or greater than
 the number of points in the point cloud (number of FLSs).
@@ -24,7 +24,8 @@ In `aws_local_vars.sh`, set `N` to the number of total instances you have. Set t
 AWS key pair on the primary instance. List the public IP addresses of all the instances in `HOSTNAMES`; the primary
 should be the first.
 
-Configure the experiment(s) you want to run by modifying `gen_conf.py`.
+Configure the experiment(s) you want to run by modifying `gen_conf.py`. The current configuration generates
+configurations to reproduce raw results of Figures 13, 14, and 15.
 
 Clone the repository and set up the project by running `setup.sh` on each server using the following. Then copy the AWS
 key to the primary instance.
@@ -47,4 +48,8 @@ bash scripts/download_aws.sh --results
 bash scripts/download_aws.sh --extract-results
 ```
 
-Finally, use the `utils/file.py` to post-process the results to generate charts.
+Finally, use the `utils/file.py` to post-process the results to generate charts:
+
+```
+python utils/file.py -i [path to the results directory]
+```

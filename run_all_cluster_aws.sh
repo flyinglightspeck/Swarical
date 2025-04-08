@@ -16,6 +16,6 @@ for ((i = 0; i < count; i++)); do
      echo "config: $i," "repetition: $j"
      bash start_cluster_aws.sh "$i"
      sleep 10
-     pkill python3.9
+     pkill python3.10
   done
 done

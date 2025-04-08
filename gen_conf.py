@@ -16,7 +16,6 @@ def_conf = {
     "DURATION": "60",
     "SHAPE": "'grid_36_spanning_2'",
     "RESULTS_PATH": "'results'",
-    "MULTICAST": "True",
     "CAMERA": "'w'",
     "SCALE": "1",
     "SS_ERROR_MODEL": "0",
@@ -34,40 +33,32 @@ def_conf = {
 
 props = [
     {
-        "keys": ["CAMERA", "SS_ERROR_MODEL"],
+        "keys": ["CAMERA"],
         "values": [
-            {"CAMERA": "'w'", "SS_ERROR_MODEL": "1"},
+            {"CAMERA": "'w'"},
             # {"CAMERA": "'r'", "SS_ERROR_MODEL": "1"},
             # {"CAMERA": "'w'", "SS_ERROR_MODEL": "0"},
         ],
     },
     {
-        "keys": ["SHAPE", "GROUP_TYPE", "SCALE"],
+        "keys": ["SHAPE", "GROUP_TYPE", "SS_ERROR_MODEL"],
         "values": [
-            {"SHAPE": "'chess_100_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'"},
-            {"SHAPE": "'chess_408_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'"},
-            {"SHAPE": "'palm_725_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'"},
-            {"SHAPE": "'kangaroo_972_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'"},
-            {"SHAPE": "'dragon_1147_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'"},
+            # {"SHAPE": "'chess_100_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
+            # {"SHAPE": "'chess_408_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
+            # {"SHAPE": "'palm_725_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
+            # {"SHAPE": "'kangaroo_972_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
+            # {"SHAPE": "'dragon_1147_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
 
 
-            {"SHAPE": "'skateboard_1372_5_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'"},
-            {"SHAPE": "'skateboard_1372_10_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'"},
-            {"SHAPE": "'skateboard_1372_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'"},
-            {"SHAPE": "'skateboard_1372_150_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'"},
-            {"SHAPE": "'skateboard_1372_200_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'"},
+            {"SHAPE": "'skateboard_1372_5_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
+            {"SHAPE": "'skateboard_1372_10_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
+            {"SHAPE": "'skateboard_1372_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
+            {"SHAPE": "'skateboard_1372_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "0"},
+            {"SHAPE": "'skateboard_1372_150_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
+            {"SHAPE": "'skateboard_1372_200_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
 
-            {"SHAPE": "'skateboard_1372_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2'"},
-            {"SHAPE": "'skateboard_1372_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v3'"},
-        ]
-    },
-    {
-        "keys": ["DEAD_RECKONING_ANGLE", "SS_ERROR_PERCENTAGE"],
-        "values": [
-            {"DEAD_RECKONING_ANGLE": "5", "SS_ERROR_PERCENTAGE": "0.0"},
-            # {"DEAD_RECKONING_ANGLE": "0", "SS_ERROR_PERCENTAGE": "0.0"},
-            # {"DEAD_RECKONING_ANGLE": "5", "SS_ERROR_PERCENTAGE": "0.01"},
-            # {"DEAD_RECKONING_ANGLE": "5", "SS_ERROR_PERCENTAGE": "0.1"},
+            {"SHAPE": "'skateboard_1372_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2'", "SS_ERROR_MODEL": "1"},
+            {"SHAPE": "'skateboard_1372_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v3'", "SS_ERROR_MODEL": "1"},
         ]
     },
 ]

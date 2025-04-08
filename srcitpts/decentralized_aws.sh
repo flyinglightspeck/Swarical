@@ -66,7 +66,7 @@ for (( i=0; i<N; i++ )); do
 
     # kill processes
     if [ "$kill_processes" = true ]; then
-        ssh -oStrictHostKeyChecking=no -i ${KEY_PATH} "${server_addr}" "pkill python3.9" &
+        ssh -oStrictHostKeyChecking=no -i ${KEY_PATH} "${server_addr}" "pkill python3.10" &
     fi
 done
 

@@ -13,7 +13,6 @@ class Config:
     DURATION = 30
     SHAPE = 'grid4x4_16_4_spanning_2'
     RESULTS_PATH = 'results'
-    MULTICAST = True
     CAMERA = 'w'
     SCALE = 1
     SS_ERROR_MODEL = 1

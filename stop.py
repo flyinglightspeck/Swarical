@@ -9,7 +9,7 @@ def stop_all():
     stop_msg = Message(MessageTypes.STOP).from_server().to_all()
     dumped_stop_msg = pickle.dumps(stop_msg)
 
-    if Config.MULTICAST:
+    if Constants.PLATFORM == 'aws':
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sent = sock.sendto(dumped_stop_msg, Constants.MULTICAST_GROUP_ADDRESS)
         sock.close()

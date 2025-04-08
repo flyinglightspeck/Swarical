@@ -1,3 +1,4 @@
+import argparse
 import heapq
 import math
 import os
@@ -778,8 +779,11 @@ def report_distance_traveled(st_path):
 
 
 if __name__ == '__main__':
-    results_directory = "path/to/results/shape_name/timestamp"
-    shape_directory = "path/to/results/shape_name"
-    create_csv_from_json(results_directory)
-    combine_csvs(results_directory, results_directory)
-    gen_sw_charts(results_directory, "*", "file_name", False)
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument('-i', '--input', type=str, help='input directory with charts.json', required=True)
+    args = argparser.parse_args()
+    results_directory = args.input
+    # shape_directory = "path/to/results/shape_name"
+    # create_csv_from_json(results_directory)
+    # combine_csvs(results_directory, results_directory)
+    gen_sw_charts(results_directory, "*", "HD_CD", False)
