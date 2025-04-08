@@ -7,3 +7,4 @@ scipy==1.10.1
 openpyxl==3.1.2
 pymeshlab==2023.12.post3
 scikit-learn=1.6.1
+notebook=7.3.3
