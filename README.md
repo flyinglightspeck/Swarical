@@ -29,9 +29,12 @@ Ubuntu: https://docs.docker.com/desktop/setup/install/linux/ubuntu/
 
 Make sure Docker is running.
 
-Run `bash init.sh` script.
+Run the following:
+```commandline
+bash init.sh
+``` 
 
-Then it builds the Docker image and run the Docker container.
+It builds the Docker image and run the Docker container.
 
 After the script finished, you will see a similar note:
 ![docker.png](figures%2Fdocker.png)
@@ -56,24 +59,24 @@ using the Jupyter notebook in your browser and use the Download button in the le
 ![jupyter.png](figures%2Fjupyter.png)
 
 
-## Setup and Install Using Virtual Environment
+## Setup and Install Using Virtual Environment (Not Recommended)
 
 Note: Using the docker is strongly preferred. To proceed with Virtual Environment make sure you have Python 3.10 installed.
 
-```
+```commandline
 cd Swarical
 python3.10 -m venv env
 ```
 
 Then, activate the virtual environment.
 
-```
+```commandline
 source env/bin/activate
 ```
 
 Install the requirements:
 
-```
+```commandline
 pip install -r planner-requirements.txt
 ```
 
