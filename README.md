@@ -21,41 +21,51 @@ git clone https://github.com/flyinglightspeck/Swarical.git
 
 ## Setup and Install Using Docker (Recommended)
 
-Install Docker Desktop or Docker Engine based on your OS:
+To get started, install Docker Desktop or Docker Engine depending on your operating system:
 
-Mac: https://docs.docker.com/desktop/setup/install/mac-install/
+MacOS: https://docs.docker.com/desktop/setup/install/mac-install/
 
 Ubuntu: https://docs.docker.com/desktop/setup/install/linux/ubuntu/
 
-Make sure Docker is running.
+Once Docker is installed, ensure that it is running before proceeding.
 
-Run the following:
+Open a terminal and run the following commands:
+
 ```commandline
 cd Swarical
 bash init.sh
 ``` 
 
-It builds the Docker image and run the Docker container.
+This script will:
 
-After the script finished, you will see a similar note:
+1.	Build the Docker image required for the project.
+2.	Start a Docker container with the necessary environment set up.
+
+Once the script completes, you’ll see a message like the following:
+
 ![docker.png](figures%2Fdocker.png)
 
-Copy the URL and open it in your web browser.
-
-Open `reproduction.ipynb` notebook and follow its cells.
+Copy the provided URL and open it in your web browser. This will take you to a Jupyter Notebook interface running inside the Docker container.
 
 
 ## Reproduction of Results
 
-This software was implemented and tested using Python 3.10.0.
+In the Jupyter interface:
 
-We recommend using PyCharm, which enables the software to run across multiple operating systems, e.g., Windows, MacOS,
-etc.
+1.	Open the notebook named reproduction.ipynb.
+2.	Follow the instructions in each cell step by step.
 
-`reproduction.ipynb` walks you through the steps to reproduce results of Swarcial paper.
+✅ The notebook will guide you through the process of reproducing the results from the Swarical project.
 
-To download and view results after running experiments using the notebook, navigate to the designated directory 
-using the Jupyter notebook in your browser and use the Download button in the left top corner.
+
+### Downloading and Viewing Results
+
+After running the experiments using the notebook:
+
+1.	In the Jupyter interface (in your browser), navigate to the directory where the output results are saved (given 
+      by the output logs).
+2.	Locate the desired file(s) in the file browser.
+3.	Click the file to select it, then use the Download button located at the top of the file browser to save it to your local machine.
 
 ![jupyter.png](figures%2Fjupyter.png)
 
