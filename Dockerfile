@@ -18,10 +18,10 @@ COPY . /app
 
 RUN pip install gdown
 
-RUN mkdir -p /results
+RUN mkdir -p /app/results
 
 RUN gdown https://drive.google.com/uc?id=1v_FIQnoUMFTag5VDAEySljloUDBFe9qF -O /tmp/file.zip && \
-    unzip /tmp/file.zip -d /results && \
+    unzip /tmp/file.zip -d /app/results && \
     rm /tmp/file.zip
 
 # Install any needed packages specified in requirements.txt
