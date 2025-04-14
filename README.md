@@ -19,9 +19,30 @@ Authors:  Hamed Alimohammadzadeh(halimoha@usc.edu) and Shahram Ghandeharizadeh (
 git clone https://github.com/flyinglightspeck/Swarical.git
 ```
 
-## Setup and Install Requirements
+## Setup and Install Using Docker (Recommended)
 
-Make sure you have Python 3.10 installed.
+Install Docker Desktop or Docker Engine based on your OS:
+
+Mac: https://docs.docker.com/desktop/setup/install/mac-install/
+Ubuntu: https://docs.docker.com/desktop/setup/install/linux/ubuntu/
+
+Make sure Docker is running.
+
+Run `bash init.sh` script.
+
+Then it builds the Docker image and run the Docker container.
+
+After the script finished, you will see a similar note:
+![docker.png](figures%2Fdocker.png)
+
+Copy the URL and open it in your web browser.
+
+Open `reproduction.ipynb` notebook and follow its cells.
+
+
+## Setup and Install Using Virtual Environment
+
+Note: Using the docker is strongly preferred. To proceed with Virtual Environment make sure you have Python 3.10 installed.
 
 ```
 cd Swarical
@@ -48,7 +69,7 @@ We recommend using PyCharm, which enables the software to run across multiple op
 etc.
 
 `reproduction.ipynb` walks you through the steps to reproduce results of Swarcial paper.
-``
+
 
 ## Mesh Files and Point Clouds
 
@@ -66,6 +87,7 @@ The file name parts separated by '_' specifies the shape name, number of points,
 
 See the corresponding instructions:
 - Amazon AWS: [AWS_README.md](AWS_README.md)
+- CloudLab: [CloudLab_README.md](CloudLab_README.md)
 
 
 ## Error with Large Point Clouds
