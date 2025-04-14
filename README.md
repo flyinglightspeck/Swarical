@@ -40,6 +40,21 @@ Copy the URL and open it in your web browser.
 Open `reproduction.ipynb` notebook and follow its cells.
 
 
+## Reproduction of Results
+
+This software was implemented and tested using Python 3.10.0.
+
+We recommend using PyCharm, which enables the software to run across multiple operating systems, e.g., Windows, MacOS,
+etc.
+
+`reproduction.ipynb` walks you through the steps to reproduce results of Swarcial paper.
+
+To download and view results after running experiments using the notebook, navigate to the designated directory 
+using the Jupyter notebook in your browser and use the Download button in the left top corner.
+
+![jupyter.png](figures%2Fjupyter.png)
+
+
 ## Setup and Install Using Virtual Environment
 
 Note: Using the docker is strongly preferred. To proceed with Virtual Environment make sure you have Python 3.10 installed.
@@ -60,16 +75,6 @@ Install the requirements:
 ```
 pip install -r planner-requirements.txt
 ```
-
-## Reproduction of Results
-
-This software was implemented and tested using Python 3.10.0.
-
-We recommend using PyCharm, which enables the software to run across multiple operating systems, e.g., Windows, MacOS,
-etc.
-
-`reproduction.ipynb` walks you through the steps to reproduce results of Swarcial paper.
-
 
 ## Mesh Files and Point Clouds
 
