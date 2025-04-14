@@ -69,7 +69,7 @@ After running the experiments using the notebook:
 
 ![jupyter.png](figures%2Fjupyter.png)
 
-#### Running on Multiple Servers
+### Running on Multiple Servers
 
 As mentioned in the notebook, running large-scale experiments requires a cluster of machines. We used a cluster of 20
 Amazon AWS servers, c6a.metal, with 192 virtual cores.
