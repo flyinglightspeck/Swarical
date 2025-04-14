@@ -38,41 +38,51 @@ bash init.sh
 
 This script will:
 
-1.	Build the Docker image required for the project.
-2.	Start a Docker container with the necessary environment set up.
+1. Build the Docker image required for the project.
+2. Start a Docker container with the necessary environment set up.
 
 Once the script completes, you’ll see a message like the following:
 
 ![docker.png](figures%2Fdocker.png)
 
-Copy the provided URL and open it in your web browser. This will take you to a Jupyter Notebook interface running inside the Docker container.
-
+Copy the provided URL and open it in your web browser. This will take you to a Jupyter Notebook interface running inside
+the Docker container.
 
 ## Reproduction of Results
 
 In the Jupyter interface:
 
-1.	Open the notebook named reproduction.ipynb.
-2.	Follow the instructions in each cell step by step.
+1. Open the notebook named reproduction.ipynb.
+2. Follow the instructions in each cell step by step.
 
 ✅ The notebook will guide you through the process of reproducing the results from the Swarical project.
-
 
 ### Downloading and Viewing Results
 
 After running the experiments using the notebook:
 
-1.	In the Jupyter interface (in your browser), navigate to the directory where the output results are saved (given 
-      by the output logs).
-2.	Locate the desired file(s) in the file browser.
-3.	Click the file to select it, then use the Download button located at the top of the file browser to save it to your local machine.
+1. In the Jupyter interface (in your browser), navigate to the directory where the output results are saved (given
+   by the output logs).
+2. Locate the desired file(s) in the file browser.
+3. Click the file to select it, then use the Download button located at the top of the file browser to save it to your
+   local machine.
 
 ![jupyter.png](figures%2Fjupyter.png)
 
+#### Running on Multiple Servers
+
+As mentioned in the notebook, running large-scale experiments requires a cluster of machines. We used a cluster of 20
+Amazon AWS servers, c6a.metal, with 192 virtual cores.
+
+Please follow the instructions bellow based on your preference:
+
+- Amazon AWS: [AWS_README.md](AWS_README.md)
+- CloudLab: [CloudLab_README.md](CloudLab_README.md)
 
 ## Setup and Install Using Virtual Environment (Not Recommended)
 
-Note: Using the docker is strongly preferred. To proceed with Virtual Environment make sure you have Python 3.10 installed.
+Note: Using the docker is strongly preferred. To proceed with Virtual Environment make sure you have Python 3.10
+installed.
 
 ```commandline
 cd Swarical
@@ -103,13 +113,6 @@ the following shapes: `chess`, `dragon`, `kangaroo`, `racecar`, `skateboard`, `g
 
 The file name parts separated by '_' specifies the shape name, number of points, group size, and the planner variant.
 
-## Running on Multiple Servers
-
-See the corresponding instructions:
-- Amazon AWS: [AWS_README.md](AWS_README.md)
-- CloudLab: [CloudLab_README.md](CloudLab_README.md)
-
-
 ## Error with Large Point Clouds
 
 With large point clouds and the Linux operating system, the execution of the software may exhaust the max open files
@@ -128,7 +131,6 @@ Add the following line:
 Reload terminal and then run this command:
 
 ``ulimit -n 9999``
-
 
 ## Online Localization: ISR, HC, and RSF
 
