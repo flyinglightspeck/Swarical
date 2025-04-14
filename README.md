@@ -24,6 +24,7 @@ git clone https://github.com/flyinglightspeck/Swarical.git
 Install Docker Desktop or Docker Engine based on your OS:
 
 Mac: https://docs.docker.com/desktop/setup/install/mac-install/
+
 Ubuntu: https://docs.docker.com/desktop/setup/install/linux/ubuntu/
 
 Make sure Docker is running.
