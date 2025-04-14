@@ -22,7 +22,7 @@ RUN mkdir -p /results
 
 RUN gdown https://drive.google.com/uc?id=1Z_20gn51X2OPPcNdE2HEkPaUWJ0I4-dh -O /tmp/file.zip && \
     unzip /tmp/file.zip -d /results && \
-    rm /tmp/file.zip \
+    rm /tmp/file.zip
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r planner-requirements.txt
