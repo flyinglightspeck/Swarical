@@ -31,6 +31,7 @@ Make sure Docker is running.
 
 Run the following:
 ```commandline
+cd Swarical
 bash init.sh
 ``` 
 
