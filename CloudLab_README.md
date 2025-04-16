@@ -41,7 +41,9 @@ secondary nodes.
 Run `scripts/decentralized.sh --setup`. This should only be run the first time the nodes are initialized. If it says that
 you do not have permission to execute this then run chmod +x decentralized_gen.sh.
 
-Navigate to `constants.py` and set PLATFORM to aws.
+Navigate to `constants.py` and set PLATFORM to cloudlab. If the PLATFORM is not set to clouldlab the messages will be 
+broadcasted to the entire datacenter, exhausting the network bandwith.
+
 Navigate to gen_conf.py and edit the RESULTS_PATH to directory shared between your nodes, e.g., 
 /proj/nova-PG0/hamedamz/results. This is an example directory, yours will be different depending on your naming scheme.
 Change the DURATION variable to the desired experiment duration. This gen_conf.py file uses a template to generate one
