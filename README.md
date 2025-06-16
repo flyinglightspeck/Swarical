@@ -48,6 +48,11 @@ Once the script completes, you’ll see a message like the following:
 Copy the provided URL and open it in your web browser. This will take you to a Jupyter Notebook interface running inside
 the Docker container.
 
+To run the container after the first time use the following command:
+```
+docker run -p 8888:8888 swarical
+```
+
 ## Reproduction of Results
 
 In the Jupyter interface:
