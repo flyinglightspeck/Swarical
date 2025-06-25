@@ -2,7 +2,7 @@
 
 N=10 # number of total servers
 USERNAME="ubuntu"
-KEY_PATH="~/Swarical/hamed-vir.pem"
+KEY_PATH="/Users/hamed/Desktop/hamed-vir.pem"
 REPO_PATH="Swarical"
 GITHUB_REPO="https://github.com/flyinglightspeck/Swarical.git"
 now=$(date +%d-%b-%H_%M_%S)

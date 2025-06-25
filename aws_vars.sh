@@ -2,7 +2,7 @@
 
 N=10 # number of total servers
 USERNAME="ubuntu"
-LOCAL_KEY_PATH="/Users/hamed/Desktop/hamed-vir.pem"
+LOCAL_KEY_PATH="~/Swarical/hamed-vir.pem"
 REPO_PATH="Swarical"
 
 #cluster 1
