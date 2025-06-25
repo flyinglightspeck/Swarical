@@ -3,7 +3,7 @@ class Constants:
     SERVER_PORT = 6000
     WORKER_ADDRESS = ("", 5000)
 
-    PLATFORM = 'local'  # Set to local, cloudlab, or aws
+    PLATFORM = 'aws'  # Set to local, cloudlab, or aws
 
     if PLATFORM == 'local':
         SERVER_ADDRESS = ("localhost", 6000)  # localhost
