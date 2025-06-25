@@ -151,6 +151,7 @@ if __name__ == '__main__':
     if IS_CLUSTER_SERVER:
         ServerSocket = socket.socket()
         ServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        logger.info(f"Binding socket to {Constants.SERVER_ADDRESS}")
         while True:
             try:
                 ServerSocket.bind(Constants.SERVER_ADDRESS)
@@ -158,12 +159,16 @@ if __name__ == '__main__':
                 time.sleep(10)
                 continue
             break
+
+        logger.info(f"Bind to {Constants.SERVER_ADDRESS}")
+        logger.info(f"Waiting for secondary nodes to connect")
+
         ServerSocket.listen(N - 1)
 
         clients = []
         for i in range(N - 1):
             client, address = ServerSocket.accept()
-            logger.info(address)
+            logger.info(f"{address} connected")
             clients.append(client)
 
     if IS_CLUSTER_CLIENT:
