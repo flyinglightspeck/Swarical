@@ -2,11 +2,14 @@
 
 N=10 # number of total servers
 USERNAME="ubuntu"
-KEY_PATH="~/path/to/key.pem"
+KEY_PATH="~/Swarical/hamed-vir.pem"
 REPO_PATH="Swarical"
 GITHUB_REPO="https://github.com/flyinglightspeck/Swarical.git"
 now=$(date +%d-%b-%H_%M_%S)
 
 HOSTNAMES=(
-"list of public ips of servers"
+"52.90.30.57"
+"13.220.151.222"
+"3.87.53.200"
+"13.222.146.157"
 )
