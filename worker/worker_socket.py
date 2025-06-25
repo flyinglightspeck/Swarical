@@ -8,8 +8,9 @@ from config import Config
 
 
 class WorkerSocket:
-    def __init__(self):
+    def __init__(self, timeout=True):
         self.sock = None
+        self.timeout = timeout
         if Constants.PLATFORM == 'aws':
             self.create_multicast_socket()
         else:
@@ -25,7 +26,8 @@ class WorkerSocket:
     def create_multicast_socket(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-        sock.settimeout(0.05)
+        if self.timeout:
+            sock.settimeout(0.05)
         # ttl = struct.pack('b', 1)
         # sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
         sock.bind(Constants.WORKER_ADDRESS)
@@ -76,5 +78,5 @@ class WorkerSocket:
 
 
 if __name__ == '__main__':
-    ws = WorkerSocket()
+    ws = WorkerSocket(timeout=False)
     ws.send_test_msgs()
