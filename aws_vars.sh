@@ -1,6 +1,6 @@
 #!/bin/bash
 
-N=10 # number of total servers
+N=4 # number of total servers
 USERNAME="ubuntu"
 LOCAL_KEY_PATH="~/Swarical/hamed-vir.pem"
 REPO_PATH="Swarical"
