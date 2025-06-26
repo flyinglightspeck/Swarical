@@ -44,8 +44,8 @@ props = [
         "keys": ["SHAPE", "GROUP_TYPE", "SS_ERROR_MODEL"],
         "values": [
             # {"SHAPE": "'grid4x4_16_4_spanning_2'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
-            {"SHAPE": "'chess_100_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
-            # {"SHAPE": "'chess_408_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
+            # {"SHAPE": "'chess_100_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
+            {"SHAPE": "'chess_408_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
             # {"SHAPE": "'palm_725_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
             # {"SHAPE": "'kangaroo_972_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
             # {"SHAPE": "'dragon_1147_50_spanning_2_sb'", "GROUP_TYPE": "'spanning_2_v2'", "SS_ERROR_MODEL": "1"},
