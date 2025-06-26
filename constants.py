@@ -12,7 +12,7 @@ class Constants:
         SERVER_ADDRESS = ("10.0.1.1", 6000)  # cloudlab
         BROADCAST_ADDRESS = ("10.0.1.255", 5000)  # cloudlab
     elif PLATFORM == 'aws':
-        SERVER_ADDRESS = ("172.31.23.11", 6000)  # aws
+        SERVER_ADDRESS = ("172.31.28.163", 6000)  # aws
 
     MULTICAST_GROUP_ADDRESS = ('224.3.29.25', 5000)
     MULTICAST_GROUP = '224.3.29.25'
