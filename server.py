@@ -409,7 +409,7 @@ if __name__ == '__main__':
             s.unlink()
         exit()
 
-    logger.info(f"Started {count} FLS processes on this none")
+    logger.info(f"Started {count} FLS processes on this node")
     gtl_point_cloud = local_gtl_point_cloud
 
     if nid == 0:

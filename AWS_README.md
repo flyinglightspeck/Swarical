@@ -15,7 +15,7 @@ After setting up AWS:
 
 Choose one of the instances as the primary instance.
 
-Set the private IP address of the primary instance as the `SERVER_ADDRESS` in `constants.py`.
+Set the private IP address of the primary instance as the `SERVER_ADDRESS` in `constants.py`. Set the `PLATFORM` to 'aws'.
 
 In `aws_vars.sh`, set `N` to the number of total instances you have. Set the `KEY_PATH` as the path to the AWS key pair
 on your machine. List the private IP addresses of all the instances in `HOSTNAMES`; the primary should be the first.
