@@ -200,22 +200,25 @@ class StateMachine:
                         self.set_waiting_mode(True)
             self.broadcast(Message(MessageTypes.GOSSIP).to_swarm_id(self.context.min_gid))
         elif self.notified or self.context.min_gid == 0:
-            for fid, gid in self.context.localizer:
-                if gid is not None and fid in self.context.neighbors:
-                    # primary localizing
-                    v, _ = self.compute_v(self.context.neighbors[fid])
-                    self.context.move(v)
-                    self.num_localizations += 1
-                    stop = self.num_localizations == 1
-                    self.broadcast(Message(MessageTypes.FOLLOW, args=(v, stop)).to_swarm_id(gid))
-                    if stop:
-                        self.num_localizations = 0
-                        self.set_waiting_mode(False)
-                        self.notified = False
-                        self.context.neighbors = {}
-                else:
-                    # anchor
-                    self.broadcast(Message(MessageTypes.NOTIFY).to_fls_id(fid, "*"))
+            if len(self.context.localizer):
+                for fid, gid in self.context.localizer:
+                    if gid is not None and fid in self.context.neighbors:
+                        # primary localizing
+                        v, _ = self.compute_v(self.context.neighbors[fid])
+                        self.context.move(v)
+                        self.num_localizations += 1
+                        stop = self.num_localizations == 1
+                        self.broadcast(Message(MessageTypes.FOLLOW, args=(v, stop)).to_swarm_id(gid))
+                        if stop:
+                            self.num_localizations = 0
+                            self.set_waiting_mode(False)
+                            self.notified = False
+                            self.context.neighbors = {}
+                    else:
+                        # anchor
+                        self.broadcast(Message(MessageTypes.NOTIFY).to_fls_id(fid, "*"))
+            else:
+                self.set_waiting_mode(False)
 
     # RSF: in-order intergroup and in-order intra-group localization
     def localize_spanning_2_variant_3(self):
