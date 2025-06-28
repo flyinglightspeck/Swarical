@@ -199,8 +199,8 @@ def gen_sliding_window_chart_data(timeline, start_time, value_fn, sw=0.01, debug
 
         t = event[0] - start_time
 
-        if t > 300:
-            break
+        # if t > 300:
+        #     break
         if xs[-1] <= t < xs[-1] + sw:
             if e_type == TimelineEvents.COORDINATE:
                 current_points[e_fid] = event[2]
@@ -234,7 +234,7 @@ def gen_sliding_window_chart_data(timeline, start_time, value_fn, sw=0.01, debug
             hd.append(-1)
             cd.append(-1)
 
-    return xs, hd, cd
+    return xs[:-1], hd[:-1], cd[:-1]
 
 
 def count_close_pairs(points, threshold):
@@ -779,11 +779,16 @@ def report_distance_traveled(st_path):
 
 
 if __name__ == '__main__':
-    argparser = argparse.ArgumentParser()
-    argparser.add_argument('-i', '--input', type=str, help='input directory with charts.json', required=True)
-    args = argparser.parse_args()
-    results_directory = args.input
-    # shape_directory = "path/to/results/shape_name"
-    # create_csv_from_json(results_directory)
-    # combine_csvs(results_directory, results_directory)
-    gen_sw_charts(results_directory, "*", "HD_CD", False)
+    # argparser = argparse.ArgumentParser()
+    # argparser.add_argument('-i', '--input', type=str, help='input directory with charts.json', required=True)
+    # args = argparser.parse_args()
+    # results_directory = args.input
+    dirs = [
+        "/Users/hamed/Documents/Holodeck/Swarical/results/grid5x5_25_50_spanning_2/Tspanning_2_v2/grid5x5_25_50_spanning_2_Sgrid5x5_25_50_spanning_2_D5_1751135913"
+        ]
+    for dir in dirs:
+        results_directory = dir
+        # shape_directory = "path/to/results/shape_name"
+        create_csv_from_json(results_directory)
+        combine_csvs(results_directory, results_directory)
+        gen_sw_charts(results_directory, "*", "HD_CD", False)
