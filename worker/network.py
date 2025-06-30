@@ -56,7 +56,7 @@ class NetworkThread(threading.Thread):
             except BlockingIOError as e:
                 continue
             except Exception as e:
-                print(e)
+                # print(e)
                 continue
             # self.context.log_received_message(msg.type, length)
             if self.is_message_valid(msg):
