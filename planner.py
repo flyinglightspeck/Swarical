@@ -631,12 +631,18 @@ class Planner:
                           color=centroid_color, s=40,
                           depthshade=False)
             if is_flat(s_points):
-                hull = ConvexHull(s_points[:, 0:2])
+                try:
+                    hull = ConvexHull(s_points[:, 0:2])
+                except:
+                    continue
                 for simplex in hull.simplices:
                     ax2.plot(s_points[simplex, 0], s_points[simplex, 1], s_points[simplex, 2], color=swarm_color)
 
             else:
-                hull = ConvexHull(s_points)
+                try:
+                    hull = ConvexHull(s_points)
+                except:
+                    continue
                 boundary_points = s_points[hull.vertices, :]
                 # boundary_points = ensure_counterclockwise_order(boundary_points)
                 # face_color = (0.25, 1 - sid / 10, sid / 10, 0.25)
@@ -793,13 +799,13 @@ if __name__ == '__main__':
     # planner.visualize_trees(shape_name="grid16x16_256", swarm_size=50)
     # planner.visualize_trees()
     # for shape in shapes.values():
-    p.load_mesh(os.path.join("assets", "dataset", "mesh", shapes["kangaroo"]["mesh"]), scale=3.4)
+    p.load_mesh(os.path.join("assets", "dataset", "mesh", shapes["racecar"]["mesh"]), scale=3.4)
     p.compute_number_of_flss()
     p.sample_point_from_mesh()
     # planner.load_point_cloud(os.path.join("assets", "dataset", "point_cloud", shape["point_cloud"]))
     # planner.load_point_cloud(os.path.join("assets", "dataset", "09-59-02_04-03-2025", "m1619_1369.xyz"))
-    p.visualize_point_cloud()
-    # planner.generate_trees(swarm_size=50)
-    # planner.save_trees()
+    # p.visualize_point_cloud()
+    p.compute_trees(swarm_size=5)
+    p.save_trees()
     # print(shape)
-    # planner.add_standbys()
+    p.add_standbys()
