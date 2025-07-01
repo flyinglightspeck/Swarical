@@ -21,6 +21,8 @@ from utils.tree import find_equidistant_point
 from utils.plot import add_dead_reckoning_error
 from utils import create_logger
 
+# mpl.use("macosx")
+
 color_map = {
     '+X': 'r',
     '+Z': 'g',
@@ -615,6 +617,8 @@ class Planner:
         # cmap = mpl.colormaps.get_cmap('viridis')
         for sid, coords in sid_to_coord.items():
             s_points = np.stack(coords)
+            if len(s_points) < 3:
+                continue
             normalized_value = sid / 9
             swarm_color = cmap(normalized_value)[:3] + (0.25,)
             centroid_color = cmap(normalized_value)[:3] + (1.0,)
@@ -760,31 +764,41 @@ class Planner:
 
 
 if __name__ == '__main__':
-    planner = Planner()
+    p = Planner()
+    p.set_fls_specs(
+        fls_radius=0.03,
+        fls_min_camera_range=0.068,
+        fls_max_camera_range=0.136,
+    )
+    # p.generate_grid_point_cloud(5)
+    # p.compute_trees(swarm_size=50)
+    # p.save_trees()
+    # p.visualize_point_cloud()
     shapes = {
         "chess_small": {"point_cloud": "chess_100.xyz", "mesh": "m1609.off", "scale": 0.68},
         "chess": {"point_cloud": "chess_408.xyz", "mesh": "m1609.off", "scale": 1.36},
         "dragon": {"point_cloud": "dragon_1147.xyz", "mesh": "m1625.off", "scale": 3.4},
-        "kangaroo": {"point_cloud": "kangaroo_972.xyz", "mesh": "12271_Kangaroo_v1_L3.obj", "scale": 3.4},
+        "kangaroo": {"point_cloud": "kangaroo_972.xyz", "mesh": "12271_Kangaroo_v1_L3.off", "scale": 3.4},
         "palm": {"point_cloud": "palm_725.xyz", "mesh": "m1096.off", "scale": 3.4},
         "racecar": {"point_cloud": "racecar_3720.xyz", "mesh": "m1510.off", "scale": 3.4},
         "skateboard": {"point_cloud": "skateboard_1372.xyz", "mesh": "m1619.off", "scale": 3.4},
     }
 
-    # planner.generate_grid_point_cloud(16)
-    # planner.load_point_cloud(os.path.join("assets", "dataset", "point_cloud", shapes["skateboard"]["point_cloud"]))
+    # planner.generate_grid_point_cloud(5)
+    # planner.load_point_cloud(os.path.join("assets", "dataset", "point_cloud", shapes["chess_small"]["point_cloud"]))
     # planner.visualize_point_cloud()
     # planner.compute_trees(swarm_size=50)
     # planner.save_trees()
-    planner.visualize_trees(shape_name="chess_408", swarm_size=50)
+    # planner.visualize_trees(shape_name="chess_408", swarm_size=50)
     # planner.visualize_trees(shape_name="grid16x16_256", swarm_size=50)
     # planner.visualize_trees()
     # for shape in shapes.values():
-    # planner.load_mesh(os.path.join("assets", "dataset", "mesh", shapes["skateboard"]["mesh"]), scale=3.4)
-    # planner.sample_point_from_mesh()
+    p.load_mesh(os.path.join("assets", "dataset", "mesh", shapes["kangaroo"]["mesh"]), scale=3.4)
+    p.compute_number_of_flss()
+    p.sample_point_from_mesh()
     # planner.load_point_cloud(os.path.join("assets", "dataset", "point_cloud", shape["point_cloud"]))
     # planner.load_point_cloud(os.path.join("assets", "dataset", "09-59-02_04-03-2025", "m1619_1369.xyz"))
-    # planner.visualize_point_cloud()
+    p.visualize_point_cloud()
     # planner.generate_trees(swarm_size=50)
     # planner.save_trees()
     # print(shape)
