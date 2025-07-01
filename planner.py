@@ -412,12 +412,13 @@ class Planner:
 
         bf_in_groups = []
         for sid, t in fls_trees.items():
-            if sid in sid_to_pid:
-                source = sid_to_pid[sid]
-            else:
-                source = min(t.nodes)
-            bfs_tree = nx.bfs_tree(t, source=source)
-            bf_in_groups += dict(bfs_tree.out_degree()).values()
+            if len(t.nodes):
+                if sid in sid_to_pid:
+                    source = sid_to_pid[sid]
+                else:
+                    source = min(t.nodes)
+                bfs_tree = nx.bfs_tree(t, source=source)
+                bf_in_groups += dict(bfs_tree.out_degree()).values()
         stats = {
             "added_points": len(new_points),
             "dist_in_groups": dists,
@@ -799,10 +800,10 @@ if __name__ == '__main__':
     # planner.visualize_trees(shape_name="grid16x16_256", swarm_size=50)
     # planner.visualize_trees()
     # for shape in shapes.values():
-    p.load_mesh(os.path.join("assets", "dataset", "mesh", shapes["racecar"]["mesh"]), scale=3.4)
-    p.compute_number_of_flss()
-    p.sample_point_from_mesh()
-    # planner.load_point_cloud(os.path.join("assets", "dataset", "point_cloud", shape["point_cloud"]))
+    # p.load_mesh(os.path.join("assets", "dataset", "mesh", shapes["dragon"]["mesh"]), scale=3.4)
+    # p.compute_number_of_flss()
+    # p.sample_point_from_mesh()
+    p.load_point_cloud(os.path.join("assets", "dataset", "point_cloud", shapes["dragon"]["point_cloud"]))
     # planner.load_point_cloud(os.path.join("assets", "dataset", "09-59-02_04-03-2025", "m1619_1369.xyz"))
     # p.visualize_point_cloud()
     p.compute_trees(swarm_size=5)
