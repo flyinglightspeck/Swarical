@@ -130,6 +130,9 @@ class Planner:
 
     def compute_trees(self, swarm_size):
         A = self.point_cloud
+        if swarm_size >= len(A):
+            raise Exception(f"Swarm size must be smaller than the number of points in the point cloud.")
+
         shape = self.shape_name
         G = swarm_size
         self.swarm_size = swarm_size
@@ -144,17 +147,8 @@ class Planner:
         bfs_tree = nx.bfs_tree(T, source=max_degree_node)
         bf_across_groups = list(dict(bfs_tree.out_degree()).values())
         group_size = [len(g) for g in groups.values()]
-        # print(f"grid{shape}BF = {{{','.join(map(lambda x:str(x),list(dict(bfs_tree_out_degree).values())))}}}")
-        # print(f"grid{shape}KS = {{{','.join(list(map(lambda x: str(len(x)), groups.values())))}}}")
         bfs_order = list(bfs_tree)
-
-        # distances = nx.shortest_path_length(bfs_tree, max_degree_node)
-        # swarm_tree_height = max(distances.values())
-        # print(f"{shape}\tG={G}\t{swarm_tree_height}")
-        # return
-
         bfs_order_gid = {bfs_order[i]: i for i in range(len(bfs_order))}
-
         localizer = {}
         gid_to_localizer = {}
         dist_across_groups = []
@@ -196,7 +190,7 @@ class Planner:
             bf_in_groups += dict(bfs_tree.out_degree()).values()
             for i in range(len(bfs_order)):
                 bfs_order_pid[pids[bfs_order[i]]] = pids[i]
-            # print(gid, pids, bfs_order)
+
             radio_range_v3[pids[source_node]] = radio_range[gid][source_node]
 
             for i, j in g_T.edges:
@@ -211,7 +205,6 @@ class Planner:
                     intra_localizer[r_pid] = l_pid
                     radio_range_v3[pids[i]] = max(dist_ij, radio_range_v3.get(pids[i], 0))
 
-        # print(bfs_order_pid)
         for gid, link in gid_to_localizer.items():
             pid_0 = bfs_order_pid[link[0]]
             pid_1 = bfs_order_pid[link[1]]
@@ -226,34 +219,11 @@ class Planner:
 
         self.gid = [bfs_order_gid[a] for a in assignments]
         self.pid = [bfs_order_pid[i] for i in range(A.shape[0])]
-        # np.savetxt(f"../assets/{shape}_{G}_spanning_2.txt",
-        #            np.hstack((A, np.array(new_gid).reshape(-1, 1), np.array(new_pid).reshape(-1, 1))), delimiter=',')
 
         self.localizer = {str(k): v for k, v in localizer.items()}
         self.intra_localizer = {str(k): v for k, v in intra_localizer.items()}
         self.grouped_points = np.hstack(
             (self.point_cloud, np.array(self.gid).reshape(-1, 1), np.array(self.pid).reshape(-1, 1)))
-        # with open(f"../assets/{shape}_{G}_spanning_2_localizer.json", "w") as f:
-        #     json.dump(localizer, f)
-        # with open(f"../assets/{shape}_{G}_spanning_2_intra_localizer.json", "w") as f:
-        #     json.dump(intra_localizer, f)
-
-        # if True:
-        #     fig = plt.figure()
-        #     ax = fig.add_subplot(projection='3d')
-        #     ax.scatter3D(A[:, 0], A[:, 1], A[:, 2], depthshade=False)
-        #     for g in groups.values():
-        #         xs = [A[p][0] for p in g]
-        #         ys = [A[p][1] for p in g]
-        #         zs = [A[p][2] for p in g]
-        #         ax.plot3D(xs, ys, zs, '-bo')
-        #
-        #     for i, l in localizer.items():
-        #         for p in l:
-        #             ax.plot3D(A[[i, p[0]], 0], A[[i, p[0]], 1], A[[i, p[0]], 2], '-ro')
-
-        # ax.plot3D(A[T, 0], A[T, 1], A[T, 2] + 1, '-o')
-        # plt.show()
 
         return {"group_size": group_size,
                 "dist_in_groups": dist_in_groups,
@@ -306,7 +276,6 @@ class Planner:
         new_points = []
         dists = []
 
-        # fls_tree = nx.DiGraph()
         fls_trees = {}
         for sid in sids:
             fls_trees[sid] = nx.DiGraph()
@@ -320,13 +289,10 @@ class Planner:
                 new_dist = (min_dist + th + 0.1) / 2
                 if dist_ij / 2 > new_dist:
                     new_dist = dist_ij / 2
-                # if new_dist > th + 0.1:
-                #     print("Exceeded fls tree", new_dist)
-                # return
+
                 standby_coord, d1, d2 = find_equidistant_point(coord_i, coord_j, new_dist)
                 sid_to_coord[fid_to_sid[i]].append(standby_coord)
 
-                # new_intra_localizer.append({str(i): new_fid, str(new_fid): j})
                 new_intra_localizer[str(i)] = new_fid
                 new_intra_localizer[str(new_fid)] = j
                 new_points.append([*standby_coord, fid_to_sid[i], new_fid])
@@ -360,9 +326,7 @@ class Planner:
                         new_dist = (min_dist + th + 0.1) / 2
                         if dist_ij / 2 > new_dist:
                             new_dist = dist_ij / 2
-                        # if new_dist > th + 0.1:
-                        #     print("Exceeded swarm tree", new_dist)
-                        # return
+
                         standby_coord, d1, d2 = find_equidistant_point(coord_i, coord_j, new_dist)
                         anchor_sid = fid_to_sid[j]
                         # add a point to anchor swarm: i -> (new_fid -> j)
@@ -371,11 +335,10 @@ class Planner:
                         new_intra_localizer[str(new_fid)] = j
                         fls_trees[fid_to_sid[j]].add_edge(j, new_fid)
                         # change the anchor for this fls
-                        # print(i)
                         new_localizer[str(i)][anchor_idx][0] = new_fid
                         new_localizer[str(new_fid)] = [[i, None]]
                         cur_j = new_localizer[str(j)]
-                        # print(i, j)
+                        # remove localizer
                         if len(cur_j) == 1:
                             new_localizer.pop(str(j))
                         else:
@@ -383,29 +346,17 @@ class Planner:
                             for cj in cur_j:
                                 if cj[0] != i:
                                     new_j.append(cj)
-                                # else:
-                                # print(cj)
+
                             new_localizer[str(j)] = new_j
+                            localizer[str(j)] = new_j
                         dists_2.append(d1)
                         dists_2.append(d2)
                         new_fid += 1
                     else:
                         dists_2.append(dist_ij)
-                    # swarm_tree.add_edge(fid_to_sid[i], fid_to_sid[j])
                     swarm_tree.add_edge(fid_to_sid[j], fid_to_sid[i])
 
-        # fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-        # ax1 = axes[0, 0]
-        # ax2 = axes[0, 1]
-        # ax1.hist(np.array(dists))
-        # ax2.hist(np.array(dists_2))
-        # plt.show()
-        # return
-
         A = np.vstack((points, new_points))
-        # print(points)
-        # print(len(new_points))
-        # print(A)
 
         bfs_tree = nx.bfs_tree(swarm_tree, source=0)
         bf_across_groups = list(dict(bfs_tree.out_degree()).values())
@@ -522,20 +473,6 @@ class Planner:
                         fls_tree.add_edge(i, j[0])
                     swarm_tree.add_edge(fid_to_sid[i], fid_to_sid[j[0]])
 
-        # print(sid_to_pid)
-        # fig = plt.figure()
-        # ax = fig.add_subplot(111, projection='3d')
-        # Draw nodes
-        # nx.draw_networkx_nodes(fls_tree, fid_to_coord, node_color='blue', ax=ax)
-
-        # Draw edges
-        # nx.draw_networkx_edges(fls_tree, fid_to_coord, ax=ax)
-        # print(len(sid_to_coord[7]))
-        # nx.draw_kamada_kawai(swarm_tree, with_labels=True, arrows=True)
-        # plt.show()
-        # exit()
-
-        # with plt.style.context('seaborn-white'):
         fig = plt.figure(figsize=(10, 5))
         ax = fig.add_subplot(121, projection='3d')
         ax2 = fig.add_subplot(122, projection='3d')
@@ -570,13 +507,12 @@ class Planner:
                 marker = primary_marker
                 colors[j] = anchor_color
                 markers[j] = anchor_marker
-                # ax.text(fid_to_coord[i][0], fid_to_coord[i][1], fid_to_coord[i][2], "primary")
+
             if i not in colors:
                 colors[i] = color
                 markers[i] = marker
             arrow_colors.append(color)
 
-        # Q = ax.quiver(x, y, z, u, v, w, color='#ccc', arrow_length_ratio=0.2, zorder=2)
         root = fid_to_coord[sid_to_pid[0]]
         markers = list(markers.values())
         colors = list(colors.values())
@@ -588,10 +524,8 @@ class Planner:
                          color=colors[i], depthshade=False, zorder=2, s=sizes[markers[i]])
         ax.scatter3D([root[0]], [root[1]], [root[2]], marker=root_marker, color=root_color, depthshade=False,
                      zorder=2, s=25)
-        # ax.text(root[0], root[1], root[2], "primary")
 
         ax.set_aspect('equal')
-
         ax.view_init(azim=-110, elev=20)
         ax.grid(False)
         ax.xaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
@@ -610,12 +544,7 @@ class Planner:
 
         ax.legend(handles=legend_elements, loc='upper left')
 
-        # plt.savefig(f"{shape}.png", dpi=300)
-
-        # print(np.stack(sid_to_coord[0]))
-        # exit()
         cmap = mpl.colormaps.get_cmap('plasma')
-        # cmap = mpl.colormaps.get_cmap('viridis')
         for sid, coords in sid_to_coord.items():
             s_points = np.stack(coords)
             if len(s_points) < 3:
@@ -623,9 +552,6 @@ class Planner:
             normalized_value = sid / 9
             swarm_color = cmap(normalized_value)[:3] + (0.25,)
             centroid_color = cmap(normalized_value)[:3] + (1.0,)
-
-            # group points
-            # ax2.scatter3D(s_points[:, 0], s_points[:, 1], s_points[:, 2])
 
             # centroid
             ax2.scatter3D(sid_to_centroid[sid][0], sid_to_centroid[sid][1], sid_to_centroid[sid][2],
@@ -645,36 +571,20 @@ class Planner:
                 except:
                     continue
                 boundary_points = s_points[hull.vertices, :]
-                # boundary_points = ensure_counterclockwise_order(boundary_points)
-                # face_color = (0.25, 1 - sid / 10, sid / 10, 0.25)
 
                 for simplex in hull.simplices:
                     collection = Poly3DCollection([s_points[simplex]], facecolors=[swarm_color], zorder=0)
                     ax2.add_collection3d(collection)
-            # ax2.plot(s_0_points[simplex, 0], s_0_points[simplex, 1], s_0_points[simplex, 2], 'k-')
-        # ax2.plot(boundary_points[:, 0], boundary_points[:, 1], boundary_points[:, 2])
 
         for i, j in swarm_tree.edges:
             ax2.plot([sid_to_centroid[i][0], sid_to_centroid[j][0]],
                      [sid_to_centroid[i][1], sid_to_centroid[j][1]],
                      [sid_to_centroid[i][2], sid_to_centroid[j][2]], color='k', zorder=1)
 
-        # inter-group anchors and primaries
-        # for i, js in localizer.items():
-        #     for j in js:
-        #         if j[1] is not None:
-        #             i = int(i)
-        #             ax2.plot([fid_to_coord[i][0], fid_to_coord[j[0]][0]],
-        #                      [fid_to_coord[i][1], fid_to_coord[j[0]][1]],
-        #                      [fid_to_coord[i][2], fid_to_coord[j[0]][2]], color=line_color, zorder=1)
-        #             ax2.scatter3D(fid_to_coord[i][0], fid_to_coord[i][1], fid_to_coord[i][2], color=primary_color,
-        #                           marker=primary_marker, zorder=2)
-        #             ax2.scatter3D(fid_to_coord[j[0]][0], fid_to_coord[j[0]][1], fid_to_coord[j[0]][2], color=anchor_color,
-        #                           marker=anchor_marker, zorder=2)
         x = [p[0] for p in sid_to_centroid.values()]
         y = [p[1] for p in sid_to_centroid.values()]
         z = [p[2] for p in sid_to_centroid.values()]
-        # ax2.scatter3D(x, y, z, s=30, depthshade=False)
+
         ax2.set_aspect('equal')
         ax2.view_init(azim=-116, elev=27)
         ax2.grid(False)
@@ -751,7 +661,7 @@ class Planner:
             v.append(h[1])
             w.append(h[2])
             colors.append(color_map[simplified_camera_placement[pid][0]])
-            # ax.text(P[pid][0], P[pid][1], P[pid][2], str(pid))
+
         Q = ax.quiver(x, y, z, u, v, w, colors=colors, arrow_length_ratio=0.5)
 
         ax.set_aspect('equal')
@@ -803,10 +713,15 @@ if __name__ == '__main__':
     # p.load_mesh(os.path.join("assets", "dataset", "mesh", shapes["dragon"]["mesh"]), scale=3.4)
     # p.compute_number_of_flss()
     # p.sample_point_from_mesh()
-    p.load_point_cloud(os.path.join("assets", "dataset", "point_cloud", shapes["dragon"]["point_cloud"]))
-    # planner.load_point_cloud(os.path.join("assets", "dataset", "09-59-02_04-03-2025", "m1619_1369.xyz"))
-    # p.visualize_point_cloud()
-    p.compute_trees(swarm_size=5)
-    p.save_trees()
-    # print(shape)
-    p.add_standbys()
+    for shape in shapes.keys():
+        for g in [5, 10, 50, 100, 150, 200]:
+            try:
+                p.load_point_cloud(os.path.join("assets", "dataset", "point_cloud", shapes[shape]["point_cloud"]))
+                # planner.load_point_cloud(os.path.join("assets", "dataset", "09-59-02_04-03-2025", "m1619_1369.xyz"))
+                # p.visualize_point_cloud()
+                p.compute_trees(swarm_size=g)
+                p.save_trees()
+                # print(shape)
+                p.add_standbys()
+            except Exception as e:
+                print(e)
