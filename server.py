@@ -417,7 +417,7 @@ if __name__ == '__main__':
             logger.warning(
                 f"Running {count} FLS processes on {num_cores} cores is inefficient and may cause slowdowns."
                 f"\nConsider reducing the number of FLSs or using a system with more cores."
-                f"\nOne core per FLS process is recommended."
+                f"\nAt least one core per FLS process is recommended ({count})."
             )
     except:
         logger.debug("Failed to get the number of processing cores")
