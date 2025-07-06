@@ -410,6 +410,18 @@ if __name__ == '__main__':
         exit()
 
     logger.info(f"Started {count} FLS processes on this node")
+
+    try:
+        num_cores = os.cpu_count()
+        if 2 * num_cores < count:
+            logger.warning(
+                f"Running {count} FLS processes on {num_cores} cores is inefficient and may cause slowdowns."
+                f"\nConsider reducing the number of FLSs or using a system with more cores."
+                f"\nOne core per FLS process is recommended."
+            )
+    except:
+        logger.debug("Failed to get the number of processing cores")
+
     gtl_point_cloud = local_gtl_point_cloud
 
     if nid == 0:
