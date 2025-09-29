@@ -149,9 +149,14 @@ RSF is not able to fully localize the Skateboard.
 * [Highly Concurrent, HC](https://youtu.be/0_Gs7IkDADw)
 * [Rounds across the Swarm-tree and FLS-trees, RSF](https://youtu.be/YlLCxW32tvg)
 
+## Position Estimation Using Camera and ArUco Markers
+In this implementation, an FLS uses a Raspberry Pi Camera Module 3 NoIR3 with
+autofocus and ArUco markers to compute its position relative to another FLS. 
+Refer to [this repository](https://github.com/flyinglightspeck/aruco-pose-estimation) for software, instructions, and 3d printable parts required for these experiments.
+
 ## Citations
 
-Hamed Alimohammadzadeh, and Shahram Ghandeharizadeh. 2024. Swarical: An Integrated Hierarchical Approach to Localizing
+[1] Hamed Alimohammadzadeh, and Shahram Ghandeharizadeh. 2024. Swarical: An Integrated Hierarchical Approach to Localizing
 Flying Light Specks. In Proceedings of the 32nd ACM International Conference on Multimedia (MM '24). Association for
 Computing Machinery, New York, NY, USA. https://doi.org/10.1145/3664647.3681080
 
@@ -173,6 +178,31 @@ location = {Melbourne, VIC, Australia},
 series = {MM '24} 
 }
 ```
+
+[2] Hamed Alimohammadzadeh, Shahram Ghandeharizadeh, Federico Cunico,
+and Joshua Springer. 2025. Reproducibility Companion Paper: Swarical:
+An Integrated Hierarchical Approach to Localizing Flying Light Specks. In
+Proceedings of the 33rd ACM International Conference on Multimedia (MM
+’25), October 27–31, 2025, Dublin, Ireland. ACM, New York, NY, USA, 5 pages.
+https://doi.org/10.1145/3746027.3759199
+
+```
+@inproceedings{swaricalrepo2025,
+author = {Alimohammadzadeh, Hamed and Ghandeharizadeh, Shahram and Cunico, Federico and Springer, Joshua},
+title = {{Reproducibility Companion Paper: Swarical: An Integrated Hierarchical Approach to Localizing Flying Light Specks}},
+year = {2025},  
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3746027.3759199},
+doi = {10.1145/3746027.3759199},
+booktitle = {Proceedings of the 33rd ACM International Conference on
+Multimedia}, 
+numpages = {5}, 
+location = {Dublin, Ireland}, 
+series = {MM '25} 
+}
+```
+
 
 ## Acknowledgments
 
